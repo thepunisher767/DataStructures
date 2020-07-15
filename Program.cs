@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace DataStructures
 {
@@ -11,9 +12,22 @@ namespace DataStructures
 
             Console.Write("Please enter a word you would like to reverse: ");
             string userInput = Console.ReadLine();
-            string result = Reverse(userInput);
+            string result = Reverse(StringCheck(userInput));
             Console.WriteLine(result);
 
+        }
+
+        private static string StringCheck(string userInput)
+        {
+            Regex stringCheck = new Regex(@"^[a-zA-Z ]*$");
+            bool matchNameRegex = stringCheck.IsMatch(userInput);
+            while (!matchNameRegex)
+            {
+                Console.Write("Characters and Spaces only, please. Try again: ");
+                userInput = Console.ReadLine();
+                matchNameRegex = stringCheck.IsMatch(userInput);
+            }
+            return userInput;
         }
 
         private static string Reverse(string userInput)
@@ -24,7 +38,7 @@ namespace DataStructures
             for (int i = 0; i < userInputLength; i++)
             {
                 char current = userInput[i];    //get character at index
-                userString.Push(current);       //push to stack
+                userString.Push(current);       //push to stack per char
             }
             foreach (char letter in userString)
             {
@@ -32,5 +46,7 @@ namespace DataStructures
             }
             return reverse;
         }
+
+
     }
 }
